@@ -1,3 +1,34 @@
-<p>
-  users works!
-</p>
+<button mat-raised-button color="primary" (click)="openAddUserDialog()">Add User</button>
+<div fxLayout="row wrap" fxLayoutGap="32px">
+  <div *ngFor="let user of usersList; index as i">
+    <div class="card card-ui">
+      <div style="float: right; margin:15px;">
+        <!-- <button mat-mini-fab color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab>
+              <mat-icon color="danger">delete</mat-icon>
+            </button> -->
+        <mat-icon (click)="removeUser(i)">close</mat-icon>
+      </div>
+
+      <div class="box">
+        <div class="img">
+          <div style="font-size: 65px;">{{user.name.charAt(0)}}</div>
+          <!-- <img src="https://www.planwallpaper.com/static/images/cool-wallpaper-5_G6Qe1wU.jpg"> -->
+        </div>
+        <h1 contenteditable="true" (blur)="editUser('username', i, $event.target.textContent)">{{user.username}}</h1>
+        <h2>
+          <div contenteditable="true" (blur)="user.name = $event.target.textContent">{{user.name}}</div><br>
+          <span class="role">
+            <mat-icon class="icon-role">next_week</mat-icon><span contenteditable="true" (blur)="user.role = $event.target.textContent">{{user.role}}</span>
+          </span><br>
+          <span class="number">
+            <mat-icon class="icon-number">phone</mat-icon><span contenteditable="true" class="number" (blur)="user.number = $event.target.textContent">{{user.number}}</span>
+          </span>
+        </h2>
+      </div>
+    </div>
+
+  </div>
+</div>
