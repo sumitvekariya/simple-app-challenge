@@ -1,26 +1,26 @@
-<form [formGroup]="userForm" (ngSubmit)="dialog.close(userForm)">
+<form [formGroup]="userForm" (ngSubmit)="addUser(userForm)">
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>id</mat-label>
-        <input formControlName="id" matInput>
+        <input formControlName="id" type="number" matInput pattern="^(\d*)?\d+$">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint>Hint</mat-hint>
+        <!-- <mat-hint>Hint</mat-hint> -->
       </mat-form-field>
     </p>
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Username</mat-label>
         <input formControlName="username" matInput pattern="[\w-_]+">
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint>Hint</mat-hint>
+        <mat-icon matSuffix>alternate_email</mat-icon>
+        <!-- <mat-hint>Hint</mat-hint> -->
       </mat-form-field>
     </p>
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Name</mat-label>
         <input formControlName="name" matInput>
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <mat-hint>Hint</mat-hint>
+        <mat-icon matSuffix>perm_identity</mat-icon>
+        <!-- <mat-hint>Hint</mat-hint> -->
       </mat-form-field>
     </p>
     <p>
@@ -28,19 +28,19 @@
         <mat-label>Role</mat-label>
         <input formControlName="role" matInput>
         <mat-icon matSuffix>next_week</mat-icon>
-        <mat-hint>Hint</mat-hint>
+        <!-- <mat-hint>Hint</mat-hint> -->
       </mat-form-field>
     </p>
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Number</mat-label>
-        <input formControlName="number" matInput>
+        <input formControlName="number" matInput pattern="^(\d*)?\d+$">
         <mat-icon matSuffix>phone</mat-icon>
-        <mat-hint>Hint</mat-hint>
+        <!-- <mat-hint>Hint</mat-hint> -->
       </mat-form-field>
     </p>
     <p>
-      <button mat-raised-button color="primary" [disabled]="userForm.invalid">
+      <button mat-raised-button [color]="'default-color'" [disabled]="userForm.invalid">
         <mat-icon mat-list-icon>person_add</mat-icon>Add User
       </button>
     </p>

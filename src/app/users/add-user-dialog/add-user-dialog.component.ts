@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
+import { CommonService } from 'src/app/shared/common.service';
 
 @Component({
   selector: 'app-add-user-dialog',
@@ -12,7 +13,8 @@ export class AddUserDialogComponent implements OnInit {
   public userForm: FormGroup;
   constructor(
     private fb: FormBuilder,
-    public dialog: MatDialogRef<AddUserDialogComponent>
+    public dialog: MatDialogRef<AddUserDialogComponent>,
+    public commonService: CommonService
     ) {
     this.userForm = this.fb.group({
       'id': new FormControl('', Validators.required),
@@ -25,6 +27,14 @@ export class AddUserDialogComponent implements OnInit {
    }
 
   ngOnInit() {
+  }
+
+
+  addUser(user: FormGroup) {
+    const usersList = [...this.commonService.users.value];
+    usersList.push(user.value);
+    this.commonService.users.next(usersList);
+    this.dialog.close();
   }
 
 }

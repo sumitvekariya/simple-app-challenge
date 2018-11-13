@@ -1,3 +1,31 @@
-<p>
-  posts works!
-</p>
+<div fxLayout="column" fxLayoutGap="10px">
+  <quill-editor [(ngModel)]="htmlText" placeholder="What is in your mind?" [modules]="quillConfig"></quill-editor>
+  <button style="width:10%;" fxFlexAlign="end" mat-raised-button [color]="'default-color'" [disabled]="!htmlText"
+    (click)="addPost()">Add
+    Post</button>
+
+  <mat-card *ngFor="let post of posts; index as i">
+    <mat-card-actions style="float:right;" fxLayoutGap="5px">
+      <button mat-mini-fab [color]="'default-color'" *ngIf="post.isBeingEdited">
+        <mat-icon (click)="editPostDone(post)">done</mat-icon>
+      </button>
+      <button mat-mini-fab [color]="'default-color'" *ngIf="!post.isBeingEdited">
+        <mat-icon (click)="editPostInitialization(post)">edit</mat-icon>
+      </button>
+      <button mat-mini-fab>
+        <mat-icon color="danger" (click)="posts.splice(i, 1)">delete</mat-icon>
+      </button>
+
+    </mat-card-actions>
+    <div *ngIf="!post.isBeingEdited">
+      <p [innerHTML]="post.text" (mouseover)="hoverEvent($event)"></p>
+      <p style="margin-block-end: 0px;">{{getDate(post.createdAt)}}<mat-icon style="vertical-align: middle;">access_time</mat-icon>
+      </p>
+    </div>
+    <div *ngIf="post.isBeingEdited" style="display: inline-block;">
+      <quill-editor [(ngModel)]="post.text" placeholder="Changed your mind?" [modules]="quillConfig"></quill-editor>
+    </div>
+
+
+  </mat-card>
+</div>

@@ -1,1 +1,23 @@
-<router-outlet></router-outlet>
+<div fxFlex="20">
+
+</div>
+<div fxFlex="60" fxLayoutGap="20px">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <nav mat-tab-nav-bar>
+        <button mat-button [routerLink]="['/admin']" [routerLinkActive]="['onhover']"><mat-icon>account_box</mat-icon>Admin</button>
+        <button mat-button [routerLink]="['/posts']" [routerLinkActive]="['onhover']"><mat-icon>toc</mat-icon>Posts</button>
+      </nav>
+      <div fxFlex></div>
+      <button mat-button (click)="openAddUserDialog()"><mat-icon>supervised_user_circle</mat-icon>Add User</button>
+      <button mat-button (click)="commonService.users.next([])"><mat-icon>restore_from_trash</mat-icon>Clear Users</button>
+      <button mat-button (click)="commonService.posts.next([])"><mat-icon>restore_from_trash</mat-icon>Clear Posts</button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <router-outlet></router-outlet>
+</div>
+
+<div fxFlex="20">
+
+</div>

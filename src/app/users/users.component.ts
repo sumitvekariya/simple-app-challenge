@@ -3,6 +3,7 @@ import { CommonService } from '../shared/common.service';
 import { User } from './user.model';
 import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.component';
 import { MatDialog } from '@angular/material';
+import { Post } from '../posts/post.model';
 
 @Component({
   selector: 'app-users',
@@ -11,20 +12,15 @@ import { MatDialog } from '@angular/material';
 })
 export class UsersComponent implements OnInit {
   usersList: User[];
+  posts: Post[];
   constructor(public commonService: CommonService, public dialog: MatDialog) {
     this.commonService.users.subscribe(users => {
       this.usersList = users;
     });
   }
 
-  ngOnInit() {}
-
-  addUser() {
-    // console.log(this.userForm.value);
-    // const usersList = [...this.commonService.users.value];
-    // usersList.push(this.userForm.value);
-    // this.commonService.users.next(usersList);
-    // this.userForm.reset();
+  ngOnInit() {
+    this.posts = this.commonService.getPosts().slice();
   }
 
   updateUser(user) {
@@ -41,13 +37,14 @@ export class UsersComponent implements OnInit {
         const usersList = [...this.commonService.users.value];
         usersList.push(result.value);
         this.commonService.users.next(usersList);
-        localStorage.setItem('users', JSON.stringify(usersList));
       }
     });
   }
 
-  editUser(key: string, index: number, text: string) {
-    console.log(key, index, text);
+  editUser(key: string, index: number, text) {
+    this.replaceMentions(key, index, text);
+
+    this.commonService.posts.next(this.posts);
     this.usersList[index][key] = text;
     this.commonService.users.next(this.usersList);
   }
@@ -55,5 +52,32 @@ export class UsersComponent implements OnInit {
   removeUser(index: number) {
     this.usersList.splice(index, 1);
     this.commonService.users.next(this.usersList);
+  }
+
+  replaceMentions(key, index, text) {
+    switch (key) {
+      case 'name': {
+      this.posts.forEach( p => {
+        const replacableData = p.text.changingThisBreaksApplicationSecurity ? p.text.changingThisBreaksApplicationSecurity : p.text;
+        p.text = replacableData.replace(
+          ('<span class="ql-mention-denotation-char">@</span>' + this.usersList[index][key]),
+          ('<span class="ql-mention-denotation-char">@</span>' + text));
+      });
+      this.commonService.posts.next(this.posts);
+      break;
+     }
+      case 'number': {
+        this.posts.forEach( p => {
+          const replacableData = p.text.changingThisBreaksApplicationSecurity ? p.text.changingThisBreaksApplicationSecurity : p.text;
+          p.text = replacableData.replace(
+            ('<span class="ql-mention-denotation-char">#</span>' + this.usersList[index][key]),
+            ('<span class="ql-mention-denotation-char">#</span>' + text));
+        });
+        this.commonService.posts.next(this.posts);
+        break;
+      }
+
+    }
+
   }
 }

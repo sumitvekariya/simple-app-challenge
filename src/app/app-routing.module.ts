@@ -15,6 +15,10 @@ const routes: Routes = [
     component: PostsComponent
   },
   {
+    path: 'posts',
+    component: PostsComponent
+  },
+  {
     path: '**',
     redirectTo: ''
   }
