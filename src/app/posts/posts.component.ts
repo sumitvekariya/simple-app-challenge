@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import * as Quill from 'quill';
 import 'quill-mention';
-import 'quill-emoji';
+import '../../quill-emoji';
 import { QuillInitializeService } from './quill-initialization.service';
 import { CommonService } from '../shared/common.service';
 import { Post } from './post.model';
