@@ -12,7 +12,8 @@
         <mat-label>Username</mat-label>
         <input formControlName="username" matInput pattern="[\w-_]+">
         <mat-icon matSuffix>alternate_email</mat-icon>
-        <!-- <mat-hint>Hint</mat-hint> -->
+        <mat-hint *ngIf="userForm.get('username').invalid && userForm.get('username')?.errors?.usernameTaken">{{userForm.get('username').value}} already has been taken</mat-hint>
+
       </mat-form-field>
     </p>
     <p>

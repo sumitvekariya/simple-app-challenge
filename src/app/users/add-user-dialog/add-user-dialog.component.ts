@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { CommonService } from 'src/app/shared/common.service';
+import { uniqueUsernameValidator } from 'src/app/shared/unique-username-validator';
 
 @Component({
   selector: 'app-add-user-dialog',
@@ -16,9 +17,10 @@ export class AddUserDialogComponent implements OnInit {
     public dialog: MatDialogRef<AddUserDialogComponent>,
     public commonService: CommonService
     ) {
+
     this.userForm = this.fb.group({
       'id': new FormControl('', Validators.required),
-      'username': new FormControl('', Validators.required),
+      'username': new FormControl('', [Validators.required, uniqueUsernameValidator(commonService)]),
       'name': new FormControl('', Validators.required),
       'number': new FormControl('', Validators.required),
       'role': new FormControl('', Validators.required),
@@ -36,5 +38,7 @@ export class AddUserDialogComponent implements OnInit {
     this.commonService.users.next(usersList);
     this.dialog.close();
   }
+
+  // get username() { return this.userForm.get('username') ? this.userForm.get('username') : ''; }
 
 }

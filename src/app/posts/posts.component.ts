@@ -53,7 +53,7 @@ export class PostsComponent implements OnInit {
     },
     autoLink: false,
     mention: {
-      allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+      allowedChars: /^[a-zA-Z\sÅÄÖåäö0-9_.-]*/,
       mentionDenotationChars: ['@', '#'],
       source: (searchTerm, renderList, mentionChar) => {
         let values;
@@ -69,8 +69,8 @@ export class PostsComponent implements OnInit {
         } else {
           const matches = [];
           for (let i = 0; i < values.length; i++) {
-            if (
-              ~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())
+            if ( (mentionChar === '@' && !values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())) ||
+                  (mentionChar === '#' && !values[i].value.indexOf(searchTerm))
             ) {
               matches.push(values[i]);
             }

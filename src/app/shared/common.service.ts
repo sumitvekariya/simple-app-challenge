@@ -15,13 +15,11 @@ export class CommonService {
     private sanitizer: DomSanitizer
   ) {
       this.users.subscribe(users => {
-        console.log(users);
         localStorage.removeItem('users');
         localStorage.setItem('users', JSON.stringify(users));
       });
 
       this.posts.subscribe( posts => {
-        console.log(posts);
         localStorage.removeItem('posts');
         localStorage.setItem('posts', JSON.stringify(posts));
       });
@@ -53,5 +51,14 @@ export class CommonService {
 
   getPosts(): Post[] {
     return this.posts.getValue();
+  }
+
+  checkIsUsernameUnique(username: string) {
+    const findUserBasedonUsername = this.users.value.find( u => u.username === username);
+
+    if (findUserBasedonUsername) {
+      return {usernameTaken: true};
+    }
+    return null;
   }
 }
